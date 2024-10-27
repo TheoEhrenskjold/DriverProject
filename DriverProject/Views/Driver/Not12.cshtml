@@ -1,0 +1,25 @@
+﻿@model IEnumerable<DriverProject.Models.Event>
+
+<h2>Recent Notifications (Last 12 Hours)</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Driver</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in Model)
+        {
+            <tr>
+                <td>@ev.NoteDate.ToShortDateString()</td>
+                    <td>@ev.Driver.DriverName</td>
+                <td>@ev.NoteDescription</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

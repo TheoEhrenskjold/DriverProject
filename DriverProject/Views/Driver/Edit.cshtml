@@ -1,0 +1,20 @@
+﻿@model DriverProject.Models.Driver
+
+<h2>Edit Driver</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="DriverID" />
+
+    <div class="form-group">
+        <label asp-for="DriverName"></label>
+        <input asp-for="DriverName" class="form-control" />
+        <span asp-validation-for="DriverName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <label asp-for="CarReg"></label>
+    <input asp-for="CarReg" class="form-control" />
+    <span asp-validation-for="CarReg" class="text-danger"></span>
+</div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</form>

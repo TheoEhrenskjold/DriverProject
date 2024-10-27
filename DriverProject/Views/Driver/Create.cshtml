@@ -1,0 +1,21 @@
+﻿@model DriverProject.Models.Driver
+
+<h2>Add Driver</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="DriverName"></label>
+        <input asp-for="DriverName" class="form-control" />
+        <span asp-validation-for="DriverName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CarReg"></label>
+        <input asp-for="CarReg" class="form-control" />
+        <span asp-validation-for="CarReg" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Driver</button>
+</form>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

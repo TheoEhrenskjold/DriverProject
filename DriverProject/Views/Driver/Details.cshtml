@@ -1,0 +1,43 @@
+﻿@model DriverProject.Models.Driver
+
+<h2>Driver Details</h2>
+
+<div>
+    <h4>Driver</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.DriverName</dd>
+    </dl>
+</div>
+
+<h3>Event History</h3>
+
+<form asp-action="Details" method="get" class="form-inline mb-3">
+    <label for="startDate">From</label>
+    <input type="date" id="startDate" name="startDate" class="form-control mx-2" />
+    <label for="endDate">To</label>
+    <input type="date" id="endDate" name="endDate" class="form-control mx-2" />
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in Model.Events)
+        {
+            <tr>
+                <td>@ev.NoteDate.ToShortDateString()</td>
+                <td>@ev.NoteDescription</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="CreateEvent" asp-route-driverId="@Model.DriverID" class="btn btn-primary">Add Event</a>
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

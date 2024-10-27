@@ -1,0 +1,20 @@
+﻿@model DriverProject.Models.Event
+
+<h2>Add Event for Driver</h2>
+
+<form asp-action="CreateEvent" method="post">
+    <input type="hidden" asp-for="DriverID" />
+
+    <div class="form-group">
+        <label asp-for="NoteDate"></label>
+        <input asp-for="NoteDate" type="date" class="form-control" />
+        <span asp-validation-for="NoteDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NoteDescription"></label>
+        <textarea asp-for="NoteDescription" class="form-control"></textarea>
+        <span asp-validation-for="NoteDescription" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Details" asp-route-id="@Model.DriverID" class="btn btn-secondary">Back to Driver</a>
+</form>
