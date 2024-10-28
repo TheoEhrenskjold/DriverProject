@@ -1,5 +1,5 @@
 ﻿@model DriverProject.Models.Driver
-
+<div class="ADriverContainer">
 <h2>Add Driver</h2>
 
 <form asp-action="Create" method="post">
@@ -13,9 +13,10 @@
         <input asp-for="CarReg" class="form-control" />
         <span asp-validation-for="CarReg" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Add Driver</button>
+        <button type="submit" class="btn btn-primary" style="margin-top:10px">Add Driver</button>
 </form>
 
 @section Scripts {
         <partial name="_ValidationScriptsPartial" />
 }
+</div>

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<DriverProject.Models.Driver>
 
-<h2>Drivers</h2>
+<h2 style="color: lavender; margin-top:5%">Drivers</h2>
 
 <form asp-action="Index" method="get" class="form-inline mb-3">
     <input type="text" name="searchName" placeholder="Search by Name" class="form-control mr-2" value="@ViewData["SearchName"]" />
-    <button type="submit" class="btn btn-primary">Search</button>
+    <button type="submit" class="btn btn-primary" style="margin-top:10px">Search</button>
 </form>
 
 <table class="table">
@@ -19,11 +19,15 @@
         @foreach (var driver in Model)
         {
             <tr>
-                    <td>@driver.DriverName</td>
+                <td>@driver.DriverName</td>
+                <td>@driver.CarReg</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@driver.DriverID">Details</a> |
-                    <a asp-action="Edit" asp-route-id="@driver.DriverID">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@driver.DriverID">Delete</a>
+                    <a asp-controller="Driver" asp-action="Details" asp-route-Id="@driver.DriverID" class="btn btn-primary">View Details</a> |
+                    <a asp-controller="Driver" asp-action="Edit" asp-route-id="@driver.DriverID" class="btn btn-warning">Edit</a> |
+                    <a asp-controller="Driver" asp-action="Delete" asp-route-id="@driver.DriverID" class="btn btn-danger">Delete</a>
+                </td>
+                <td>
+                    <a asp-controller="Event" asp-action="Index" asp-route-driverId="@driver.DriverID" class="btn btn-primary">View Events</a>
                 </td>
             </tr>
         }
@@ -31,3 +35,53 @@
 </table>
 
 <a asp-action="Create" class="btn btn-primary">Add New Driver</a>
+
+
+<!-- Driver table and search form (as you have) -->
+<!-- Recent Events Notifications -->
+<h4 style="color: lavender; margin-top: 5%">Recent Events</h4>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Driver Name</th>
+                <th>Note Date</th>
+                <th>Description</th>
+                <th>Belopp In</th>
+                <th>Belopp Ut</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var recentEvents = ViewData["RecentEvents"] as List<DriverProject.Models.Event>;
+                if (recentEvents != null && recentEvents.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <strong>Viewing events from the last @(User.IsInRole("Admin") ? "24 hours" : "12 hours"):</strong>
+                        </td>
+                    </tr>
+
+                    foreach (var evt in recentEvents)
+                    {
+                        <tr>
+                            <td>@evt.Driver?.DriverName</td>
+                            <td>@evt.NoteDate.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>@evt.NoteDescription</td>
+                            <td>@evt.BeloppIn</td>
+                            <td>@evt.BeloppUt</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <span>No recent events in the specified time range.</span>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

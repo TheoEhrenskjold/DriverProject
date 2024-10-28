@@ -17,18 +17,36 @@ namespace DriverProject.Controllers
 
         public async Task<IActionResult> Index(string searchName)
         {
+            // Filter drivers based on the search string
             var drivers = _context.Drivers.AsQueryable();
 
             if (!string.IsNullOrEmpty(searchName))
             {
-                drivers = drivers.Where(d => d.DriverName.Contains(searchName));  // Ensure Name or DriverName is mapped correctly
+                drivers = drivers.Where(d => d.DriverName.Contains(searchName));
             }
 
-            var driversList = await drivers.ToListAsync();
-            return View(driversList);  // Pass the full Driver objects to the view
+            var driversList = await drivers.ToListAsync();            
+
+            int hours = User.IsInRole("Admin") ? 24 : 12;
+            DateTime since = DateTime.Now.AddHours(-hours);
+
+            // Fetch events within the determined time range
+            var recentEvents = await _context.Events
+                .Where(e => e.NoteDate >= since)
+                .OrderByDescending(e => e.NoteDate)
+                .ToListAsync();
+
+            // Use ViewData to pass recent events to the view
+            ViewData["RecentEvents"] = recentEvents;
+
+            return View(driversList);  // Pass drivers list to the view
         }
 
+
+
+
         // Visa specifik förare med historik
+        [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
             var driver = await _context.Drivers
@@ -40,7 +58,7 @@ namespace DriverProject.Controllers
                 return NotFound();
             }
 
-            return View(driver);
+            return View(driver); // Ensure this is `View` with no explicit view name, using the convention
         }
 
         // Skapa ny förare

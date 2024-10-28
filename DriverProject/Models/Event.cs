@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DriverProject.Models
 {
@@ -16,6 +17,8 @@ namespace DriverProject.Models
 
         // Relation till förare
         public Guid DriverID { get; set; }
-        public Driver? Driver { get; set; }
+        public Driver Driver { get; set; }
     }
+
+
 }

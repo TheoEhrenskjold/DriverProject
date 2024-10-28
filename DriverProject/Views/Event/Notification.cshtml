@@ -1,0 +1,30 @@
+﻿@model IEnumerable<DriverProject.Models.Event>
+@{
+    ViewData["Title"] = "Recent Events (Last 12 Hours)";
+}
+
+<h2>Recent Events in the Last 12 Hours</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Note Date</th>
+            <th>Description</th>
+            <th>Belopp In</th>
+            <th>Belopp Ut</th>
+            <th>Driver Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var evt in Model)
+        {
+            <tr>
+                <td>@evt.NoteDate.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@evt.NoteDescription</td>
+                <td>@evt.BeloppIn</td>
+                <td>@evt.BeloppUt</td>
+                <td>@evt.Driver?.DriverName</td>
+            </tr>
+        }
+    </tbody>
+</table>

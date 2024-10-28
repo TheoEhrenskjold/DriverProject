@@ -1,43 +1,56 @@
 ﻿@model DriverProject.Models.Driver
 
+@{
+    ViewData["Title"] = "Driver Details";
+}
+<div class="DriverContainer">
 <h2>Driver Details</h2>
 
 <div>
-    <h4>Driver</h4>
+    <h4>Driver Information</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">Name</dt>
         <dd class="col-sm-10">@Model.DriverName</dd>
+
+        <dt class="col-sm-2">Car Registration</dt>
+        <dd class="col-sm-10">@Model.CarReg</dd>
     </dl>
 </div>
 
 <h3>Event History</h3>
 
-<form asp-action="Details" method="get" class="form-inline mb-3">
-    <label for="startDate">From</label>
-    <input type="date" id="startDate" name="startDate" class="form-control mx-2" />
-    <label for="endDate">To</label>
-    <input type="date" id="endDate" name="endDate" class="form-control mx-2" />
-    <button type="submit" class="btn btn-primary">Filter</button>
-</form>
-
-<table class="table">
+<table class="table table-bordered mt-3">
     <thead>
         <tr>
             <th>Date</th>
             <th>Description</th>
+            <th>Belopp In</th>
+            <th>Belopp Ut</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var ev in Model.Events)
+        @if (Model.Events != null && Model.Events.Any())
+        {
+            foreach (var evt in Model.Events)
+            {
+                <tr>
+                    <td>@evt.NoteDate.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@evt.NoteDescription</td>
+                    <td>@evt.BeloppIn</td>
+                    <td>@evt.BeloppUt</td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>@ev.NoteDate.ToShortDateString()</td>
-                <td>@ev.NoteDescription</td>
+                <td colspan="4" class="text-center">No events available for this driver.</td>
             </tr>
         }
     </tbody>
 </table>
+</div>
 
-<a asp-action="CreateEvent" asp-route-driverId="@Model.DriverID" class="btn btn-primary">Add Event</a>
-<a asp-action="Index" class="btn btn-secondary">Back to List</a>
+<a asp-action="Index" class="btn btn-secondary" style="margin-top:10px">Back to List</a>
+<a asp-action="CreateEvent" asp-route-driverId="@Model.DriverID" class="btn btn-primary" style="margin-top:10px">Add Event</a>

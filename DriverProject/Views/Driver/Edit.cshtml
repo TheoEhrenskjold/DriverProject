@@ -1,5 +1,5 @@
 ﻿@model DriverProject.Models.Driver
-
+<div class="DEditContainer">
 <h2>Edit Driver</h2>
 
 <form asp-action="Edit" method="post">
@@ -15,6 +15,7 @@
     <input asp-for="CarReg" class="form-control" />
     <span asp-validation-for="CarReg" class="text-danger"></span>
 </div>
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <button type="submit" class="btn btn-primary" style="margin-top:10px">Save Changes</button>
+        <a asp-action="Index" class="btn btn-secondary" style="margin-top:10px">Back to List</a>
 </form>
+</div>
